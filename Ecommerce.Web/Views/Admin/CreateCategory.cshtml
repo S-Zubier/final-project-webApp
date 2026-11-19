@@ -1,0 +1,12 @@
+﻿@model Ecommerce.Domain.Entities.Category
+<div class="container mt-4" dir="rtl">
+    <h3>إضافة قسم جديد</h3>
+    <form asp-action="CreateCategory" method="post" class="w-50">
+        <div class="mb-3">
+            <label>اسم القسم</label>
+            <input asp-for="Name" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">حفظ القسم</button>
+    </form>
+</div>
+

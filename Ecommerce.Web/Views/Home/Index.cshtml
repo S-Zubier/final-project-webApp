@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Ecommerce.Domain.Entities.Product>
+@{
+    ViewData["Title"] = "المتجر الإلكتروني";
+}
+
+<div class="container mt-4" dir="rtl">
+    <div class="mb-4 text-center">
+        <img src="~/images/shopping2.jpg" alt="صورة المتجر" class="img-fluid rounded-4 shadow-sm w-100" style="max-height: 350px; object-fit: cover;" />
+    </div>
+
+    <div class="d-flex justify-content-between mb-4">
+        <h2>منتجات المتجر</h2>
+        <div>
+            <a asp-controller="Admin" asp-action="CreateCategory" class="btn btn-secondary">+ إضافة قسم</a>
+            <a asp-controller="Admin" asp-action="CreateProduct" class="btn btn-primary">+ إضافة منتج</a>
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-warning">سلة المشتريات</a>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "https://placehold.co" : item.ImageUrl)" class="card-img-top" style="height:200px; object-fit:cover;">
+                    <div class="card-body">
+                        <span class="badge bg-info">@item.Category?.Name</span>
+                        <h5 class="card-title mt-2">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <h6 class="text-success">@item.Price $</h6>
+                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-success w-100 mt-2">أضف للسلة</a>
+
+
+                        <div class="d-flex gap-2 mt-2">
+                            <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm w-50">
+                                 تعديل
+                            </a>
+                            <form asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@item.Id" method="post" class="w-50" onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج نهائياً؟');">
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                     حذف
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

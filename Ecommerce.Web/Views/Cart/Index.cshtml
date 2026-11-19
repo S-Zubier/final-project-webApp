@@ -1,0 +1,30 @@
+﻿@model List<Ecommerce.Application.DTOs.CartItemDto>
+<div class="container mt-4" dir="rtl">
+    <h3>سلة المشتريات</h3>
+    @if (!Model.Any())
+    {
+        <p>السلة فارغة حالياً.</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead><tr><th>المنتج</th><th>السعر</th><th>الكمية</th><th>الإجمالي</th></tr></thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr><td>@item.ProductName</td><td>@item.Price $</td><td>@item.Quantity</td><td>@(item.Price * item.Quantity) $</td></tr>
+                }
+            </tbody>
+        </table>
+        <h4>المجموع الكلي: @Model.Sum(x => x.Price * x.Quantity) $</h4>
+        <hr />
+        <h5>بيانات التوصيل وإتمام الطلب</h5>
+        <form asp-action="Checkout" method="post" class="w-50">
+            <div class="mb-2"><input name="customerName" placeholder="الاسم الكامل" class="form-control" required /></div>
+            <div class="mb-2"><input name="address" placeholder="العنوان بالتفصيل" class="form-control" required /></div>
+            <div class="mb-2"><input name="phone" placeholder="رقم الهاتف" class="form-control" required /></div>
+            <button type="submit" class="btn btn-primary">تأكيد الطلب</button>
+        </form>
+    }
+</div>
+
